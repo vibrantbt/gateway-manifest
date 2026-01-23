@@ -47,7 +47,6 @@ if [[ ${#SETS[@]} -eq 0 ]]; then
   usage
   exit 2
 fi
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_FILE="${SCRIPT_DIR}/${ENV_NAME}/images.env"
 
@@ -56,7 +55,9 @@ if [[ ! -f "${TARGET_FILE}" ]]; then
   exit 1
 fi
 
-python3 - <<'PY'
+UPDATES="$(printf '%s\n' "${SETS[@]}")"
+
+TARGET_FILE="${TARGET_FILE}" UPDATES="${UPDATES}" python3 - <<'PY'
 import os
 import sys
 
